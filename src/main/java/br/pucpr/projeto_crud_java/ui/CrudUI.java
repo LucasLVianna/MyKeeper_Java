@@ -23,42 +23,29 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * PADRÃO: Template Method (GoF, comportamental) - AbstractClass das telas CRUD.
- *
- * Os fluxos adicionar / atualizar / deletar / limpar / carregar são definidos
- * aqui uma única vez (métodos finais). Cada tela concreta só informa o que
- * varia: título, colunas, campos do formulário, como ler/preencher o formulário
- * e qual repositório usar.
- *
- * PADRÃO: Strategy - esta classe é o Context: guarda a EstrategiaOrdenacao
- * escolhida no ComboBox e a aplica ao listar os registros.
- *
- * ATENÇÃO: a subclasse deve chamar {@link #montar()} como última instrução do
- * seu construtor (os campos da subclasse só existem depois do super()).
- */
+// Tela base dos CRUDs (Template Method): o fluxo de adicionar, atualizar, deletar e
+// listar fica aqui, e cada tela só define título, colunas, campos e repositório.
+// Também aplica a estratégia de ordenação escolhida (Strategy).
+// Obs.: a subclasse tem que chamar montar() no fim do construtor.
 public abstract class CrudUI<T extends Identificavel> extends Stage {
 
-    // ---------- passos variáveis (abstratos) ----------
     protected abstract String titulo();
     protected abstract RepositorioArquivo<T> repositorio();
     protected abstract void configurarColunas(TableView<T> tabela);
     protected abstract List<Node> camposFormulario();
-    /** Lê o formulário e devolve a entidade; lança IllegalArgumentException com a mensagem de erro de validação. */
+    // lança IllegalArgumentException com a mensagem de erro se o formulário for inválido
     protected abstract T lerFormulario(int id);
     protected abstract void preencherFormulario(T item);
     protected abstract void limparFormulario();
     protected abstract List<EstrategiaOrdenacao<T>> estrategiasOrdenacao();
 
-    // ---------- ganchos opcionais ----------
+    // podem ser sobrescritos pelas telas
     protected boolean podeEditar(T item) { return true; }
     protected boolean podeExcluir(T item) { return true; }
     protected List<Button> botoesExtras() { return List.of(); }
-    /** Chamado quando a seleção muda (item = null quando não há seleção). */
     protected void aoMudarSelecao(T item) { }
     protected String nomeEntidade() { return titulo(); }
 
-    // ---------- estado da tela ----------
     protected final TableView<T> tabela = new TableView<>();
     protected final ObservableList<T> dados = FXCollections.observableArrayList();
     protected final Label lblMensagem = new Label();
@@ -91,7 +78,6 @@ public abstract class CrudUI<T extends Identificavel> extends Stage {
         return t.getText().trim();
     }
 
-    /** Validação comum: todos os campos de texto informados precisam estar preenchidos. */
     protected static void exigirPreenchidos(TextField... campos) {
         for (TextField c : campos) {
             if (c.getText().trim().isEmpty()) throw new IllegalArgumentException("Preencha todos os campos.");
@@ -105,7 +91,6 @@ public abstract class CrudUI<T extends Identificavel> extends Stage {
         return col;
     }
 
-    // ---------- template: montagem da tela ----------
     protected final void montar() {
         setTitle(titulo());
 
@@ -120,7 +105,7 @@ public abstract class CrudUI<T extends Identificavel> extends Stage {
 
         cmbOrdenacao.getItems().addAll(estrategiasOrdenacao());
         cmbOrdenacao.getSelectionModel().selectFirst();
-        cmbOrdenacao.setOnAction(e -> carregarTabela());   // troca de Strategy em tempo de execução
+        cmbOrdenacao.setOnAction(e -> carregarTabela());
 
         tabela.getSelectionModel().selectedItemProperty().addListener((obs, ant, sel) -> aplicarSelecao(sel));
 
@@ -146,7 +131,6 @@ public abstract class CrudUI<T extends Identificavel> extends Stage {
         carregarTabela();
     }
 
-    // ---------- template: fluxos CRUD ----------
     private void aplicarSelecao(T sel) {
         if (sel != null) {
             txtId.setText(String.valueOf(sel.getId()));
@@ -209,7 +193,6 @@ public abstract class CrudUI<T extends Identificavel> extends Stage {
         aoMudarSelecao(null);
     }
 
-    /** Recarrega a tabela aplicando a estratégia de ordenação escolhida. */
     protected final void carregarTabela() {
         ArrayList<T> lista = repositorio().lerLista();
         EstrategiaOrdenacao<T> estrategia = cmbOrdenacao.getValue();

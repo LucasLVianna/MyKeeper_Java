@@ -1,6 +1,6 @@
 package br.pucpr.projeto_crud_java.model;
 
-/** Repositório de Estoque (Template Method + regras do State herdadas de RepositorioComEstado). */
+// as regras de status ficam em RepositorioComEstado
 public class ArquivoEstoque extends RepositorioComEstado<Estoque> {
 
     public static final ArquivoEstoque INSTANCE = new ArquivoEstoque();

@@ -3,11 +3,7 @@ package br.pucpr.projeto_crud_java.model;
 import br.pucpr.projeto_crud_java.observer.MonitorPrecos;
 import br.pucpr.projeto_crud_java.observer.VariacaoPreco;
 
-/**
- * Repositório do histórico de preços.
- * Template Method: define o caminho do arquivo e usa o gancho aposAdicionar.
- * Observer: o gancho publica um evento no MonitorPrecos (Subject).
- */
+// Ao gravar um preço novo, avisa o MonitorPrecos (Observer) com o preço anterior e o menor preço do produto
 public class ArquivoHistoricoPreco extends RepositorioArquivo<HistoricoPreco> {
 
     public static final ArquivoHistoricoPreco INSTANCE = new ArquivoHistoricoPreco();

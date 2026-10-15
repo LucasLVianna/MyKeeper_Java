@@ -1,6 +1,6 @@
 package br.pucpr.projeto_crud_java.model;
 
-/** Repositório de TicketSuporte (Template Method + regras do State herdadas de RepositorioComEstado). */
+// as regras de status ficam em RepositorioComEstado
 public class ArquivoTicketSuporte extends RepositorioComEstado<TicketSuporte> {
 
     public static final ArquivoTicketSuporte INSTANCE = new ArquivoTicketSuporte();

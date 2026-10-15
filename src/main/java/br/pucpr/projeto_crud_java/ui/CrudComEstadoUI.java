@@ -8,21 +8,16 @@ import javafx.scene.control.TextField;
 
 import java.util.List;
 
-/**
- * Segundo nível do Template Method: tela CRUD de uma entidade que usa o
- * padrão State. As regras de edição/exclusão e os rótulos dos botões de
- * transição vêm do objeto de estado atual (nenhum if sobre o texto do status).
- */
+// Tela base para entidades com status: os botões de transição e o que pode ser editado/excluído vêm do estado atual
 public abstract class CrudComEstadoUI<T extends ComEstado> extends CrudUI<T> {
 
-    /** Status é exibido, nunca digitado: só muda pelos botões de transição. */
+    // o status não é digitado, só muda pelos botões
     protected final TextField txtStatus = new TextField();
     private final Button btnAvancar = new Button("Avançar status");
     private final Button btnRetroceder = new Button("Voltar status");
 
     protected abstract EstadoStatus estadoInicial();
 
-    /** Status a gravar: o do registro selecionado (edição) ou o inicial (novo registro). */
     protected String statusParaGravar() {
         T sel = getSelecionado();
         return sel != null ? sel.getStatus() : estadoInicial().getNome();
@@ -65,7 +60,7 @@ public abstract class CrudComEstadoUI<T extends ComEstado> extends CrudUI<T> {
         T sel = getSelecionado();
         if (sel == null) return;
         try {
-            if (avancar) sel.avancarStatus(); else sel.voltarStatus();   // delega ao State
+            if (avancar) sel.avancarStatus(); else sel.voltarStatus();
             repositorio().atualizar(sel);
             mensagem("Status alterado para: " + sel.getStatus());
         } catch (RuntimeException ex) {

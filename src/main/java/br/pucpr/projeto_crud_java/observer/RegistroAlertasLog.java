@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
 
-/** ConcreteObserver: grava todo preço registrado em alertas_preco.log (auditoria). */
+// Grava todos os preços registrados em alertas_preco.log
 public class RegistroAlertasLog implements ObservadorPreco {
 
     private final String caminho;

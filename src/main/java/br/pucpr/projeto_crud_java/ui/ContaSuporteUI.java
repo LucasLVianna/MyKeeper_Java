@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import java.util.List;
 
-/** Tela CRUD de Conta de Suporte (valida CEP, e-mail e CPF). */
 public class ContaSuporteUI extends CrudUI<ContaSuporte> {
 
     private final TextField txtNome = campo("Nome");
@@ -36,9 +35,9 @@ public class ContaSuporteUI extends CrudUI<ContaSuporte> {
     @Override
     protected ContaSuporte lerFormulario(int id) {
         exigirPreenchidos(txtNome, txtCep, txtEmail, txtSenha, txtCpf);
-        if (!texto(txtCep).matches("\\d{8}")) throw new IllegalArgumentException("CEP invalido. Digite 8 numeros.");
-        if (!(texto(txtEmail).contains("@") && texto(txtEmail).contains("."))) throw new IllegalArgumentException("E-mail invalido.");
-        if (!texto(txtCpf).matches("\\d{11}")) throw new IllegalArgumentException("CPF invalido. Digite 11 numeros.");
+        if (!texto(txtCep).matches("\\d{8}")) throw new IllegalArgumentException("CEP inválido. Digite 8 números.");
+        if (!(texto(txtEmail).contains("@") && texto(txtEmail).contains("."))) throw new IllegalArgumentException("E-mail inválido.");
+        if (!texto(txtCpf).matches("\\d{11}")) throw new IllegalArgumentException("CPF inválido. Digite 11 números.");
         return new ContaSuporte(id, texto(txtNome), texto(txtCep), texto(txtEmail), texto(txtSenha), texto(txtCpf));
     }
 

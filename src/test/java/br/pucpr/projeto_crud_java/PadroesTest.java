@@ -16,7 +16,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** Testes dos quatro padrões aplicados (Template Method, State, Strategy e Observer). */
 class PadroesTest {
 
     @TempDir
@@ -27,7 +26,7 @@ class PadroesTest {
         RepositorioArquivo.setDiretorioBase(pasta);
     }
 
-    // ---------------- Template Method ----------------
+    // Template Method
 
     @Test
     void templateMethod_crudCompletoNoRepositorioGenerico() {
@@ -46,13 +45,22 @@ class PadroesTest {
     }
 
     @Test
-    void templateMethod_gancho_de_validacao_e_chamado_no_fluxo_de_adicionar() {
+    void templateMethod_validacaoAoAdicionar() {
         assertThrows(IllegalArgumentException.class,
                 () -> ArquivoHistoricoPreco.INSTANCE.adicionar(new HistoricoPreco(1, 1, 0, LocalDate.now())));
         assertEquals(0, ArquivoHistoricoPreco.INSTANCE.lerLista().size());
     }
 
-    // ---------------- State ----------------
+    @Test
+    void templateMethod_validacaoAoAtualizar() {
+        ArquivoHistoricoPreco repo = ArquivoHistoricoPreco.INSTANCE;
+        repo.adicionar(new HistoricoPreco(1, 1, 10.0, LocalDate.now()));
+        assertThrows(IllegalArgumentException.class,
+                () -> repo.atualizar(new HistoricoPreco(1, 1, -5.0, LocalDate.now())));
+        assertEquals(10.0, repo.buscarPorId(1).getPreco());
+    }
+
+    // State
 
     @Test
     void state_fluxoCompletoDoTicket() {
@@ -132,7 +140,7 @@ class PadroesTest {
         assertEquals("Aberto", new TicketSuporte(1, "x", "Alta", "qualquer texto").getEstado().getNome());
     }
 
-    // ---------------- Strategy ----------------
+    // Strategy
 
     @Test
     void strategy_trocaDeCriterioMudaAOrdem() {
@@ -148,7 +156,7 @@ class PadroesTest {
         assertEquals(List.of(2, 1, 3), ids(az.ordenar(itens)));
         assertEquals(List.of(3, 1, 2), ids(za.ordenar(itens)));
         assertEquals(List.of(3, 2, 1), ids(idDesc.ordenar(itens)));
-        assertEquals(List.of(1, 2, 3), ids(itens));   // lista original intacta
+        assertEquals(List.of(1, 2, 3), ids(itens));   // a original não muda
     }
 
     @Test
@@ -169,7 +177,7 @@ class PadroesTest {
         return r;
     }
 
-    // ---------------- Observer ----------------
+    // Observer
 
     @Test
     void observer_alertaDeAumentoENotificadoPeloRepositorio() {
@@ -219,7 +227,7 @@ class PadroesTest {
             ArquivoHistoricoPreco repo = ArquivoHistoricoPreco.INSTANCE;
             repo.adicionar(new HistoricoPreco(1, 1, 10.0, LocalDate.of(2026, 1, 1)));
             repo.adicionar(new HistoricoPreco(2, 1, 20.0, LocalDate.of(2026, 2, 1)));
-            assertEquals(1, alertas.size());          // o observador saudável foi avisado mesmo com o outro falhando
+            assertEquals(1, alertas.size());          // o outro observador falhou, mas este foi avisado
 
             MonitorPrecos.INSTANCE.remover(ok);
             repo.adicionar(new HistoricoPreco(3, 1, 40.0, LocalDate.of(2026, 3, 1)));

@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import java.time.LocalDate;
 import java.util.List;
 
-/** Tela CRUD de Estoque; o fluxo de status vem do padrão State. */
 public class EstoqueUI extends CrudComEstadoUI<Estoque> {
 
     private final TextField txtNome = campo("Nome");

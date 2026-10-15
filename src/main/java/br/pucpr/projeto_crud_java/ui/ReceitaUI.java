@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import java.util.List;
 
-/** Tela CRUD de Receita. */
 public class ReceitaUI extends CrudUI<Receita> {
 
     private final TextField txtNome = campo("Nome");
@@ -36,7 +35,7 @@ public class ReceitaUI extends CrudUI<Receita> {
     protected Receita lerFormulario(int id) {
         exigirPreenchidos(txtNome, txtIngredientes, txtModoPreparo, txtTempoPreparo);
         if (!texto(txtTempoPreparo).matches("\\d+"))
-            throw new IllegalArgumentException("Tempo de preparo invalido. Use apenas numeros.");
+            throw new IllegalArgumentException("Tempo de preparo inválido. Use apenas números.");
         return new Receita(id, texto(txtNome), texto(txtIngredientes), texto(txtModoPreparo),
                 Integer.parseInt(texto(txtTempoPreparo)));
     }

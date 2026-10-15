@@ -1,6 +1,5 @@
 package br.pucpr.projeto_crud_java.model.estado;
 
-/** ConcreteState: ticket resolvido, aguardando confirmação. Não pode ser editado nem excluído. */
 public class TicketResolvido implements EstadoStatus {
     @Override public String getNome() { return "Resolvido"; }
     @Override public EstadoStatus proximo() { return new TicketFechado(); }

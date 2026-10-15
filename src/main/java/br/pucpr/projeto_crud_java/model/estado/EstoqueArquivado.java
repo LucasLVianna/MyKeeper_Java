@@ -1,6 +1,5 @@
 package br.pucpr.projeto_crud_java.model.estado;
 
-/** ConcreteState final: estoque arquivado. Somente leitura. */
 public class EstoqueArquivado implements EstadoStatus {
     @Override public String getNome() { return "Arquivado"; }
     @Override public EstadoStatus proximo() { return this; }

@@ -3,7 +3,6 @@ package br.pucpr.projeto_crud_java.ordenacao;
 import java.util.Comparator;
 import java.util.function.ToDoubleFunction;
 
-/** ConcreteStrategy: ordena por um campo numérico (preço, tempo, limite...). */
 public class OrdenacaoPorNumero<T> extends OrdenacaoPorComparador<T> {
 
     private final ToDoubleFunction<T> campo;

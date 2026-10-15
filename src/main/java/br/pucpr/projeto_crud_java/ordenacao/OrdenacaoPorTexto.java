@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.function.Function;
 
-/** ConcreteStrategy: ordena alfabeticamente por um campo de texto (ignora acentos e maiúsculas). */
+// ignora acentos e maiúsculas/minúsculas
 public class OrdenacaoPorTexto<T> extends OrdenacaoPorComparador<T> {
 
     private final Function<T, String> campo;

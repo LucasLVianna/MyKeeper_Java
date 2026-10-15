@@ -12,7 +12,7 @@ public class Estoque implements ComEstado {
     private String nome;
     private LocalDate data_criacao;
     private String status;
-    /** Estado atual (padrão State). Não é serializado: é reconstruído a partir de {@code status}. */
+    // não é salvo no arquivo, é recriado a partir do status
     private transient EstadoStatus estado;
 
     public Estoque(int id, String nome, LocalDate data_criacao, String status) {
@@ -65,7 +65,7 @@ public class Estoque implements ComEstado {
 
     @Override
     public void avancarStatus() {
-        estado = getEstado().proximo();   // delegação ao objeto de estado
+        estado = getEstado().proximo();
         status = estado.getNome();
     }
 

@@ -1,6 +1,6 @@
 package br.pucpr.projeto_crud_java.model.estado;
 
-/** Reconstrói o objeto de estado de uma lista de compras a partir do nome gravado. */
+// Converte o status salvo no arquivo no objeto de estado
 public final class EstadosLista {
     private EstadosLista() { }
 

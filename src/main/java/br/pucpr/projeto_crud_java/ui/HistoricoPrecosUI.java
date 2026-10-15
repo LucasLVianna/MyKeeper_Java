@@ -9,11 +9,7 @@ import javafx.scene.control.*;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * Tela CRUD do Histórico de Preços.
- * Observer: ao abrir, registra observadores de alerta no MonitorPrecos (Subject);
- * ao fechar, remove-os para não acumular observadores de telas já fechadas.
- */
+// Registra os alertas de preço ao abrir a tela e remove ao fechar
 public class HistoricoPrecosUI extends CrudUI<HistoricoPreco> {
 
     private static final double LIMITE_AUMENTO_PERCENTUAL = 10.0;
@@ -37,7 +33,6 @@ public class HistoricoPrecosUI extends CrudUI<HistoricoPreco> {
         });
     }
 
-    /** Saída dos observadores: mostra o alerta na tela. */
     private void exibirAlerta(String texto) {
         Platform.runLater(() -> {
             Alert a = new Alert(Alert.AlertType.INFORMATION, texto, ButtonType.OK);

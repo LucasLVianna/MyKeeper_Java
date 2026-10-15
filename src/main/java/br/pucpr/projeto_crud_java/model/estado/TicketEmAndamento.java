@@ -1,6 +1,6 @@
 package br.pucpr.projeto_crud_java.model.estado;
 
-/** ConcreteState: ticket em atendimento. Pode ser editado, mas não excluído. */
+// não pode excluir um ticket em atendimento
 public class TicketEmAndamento implements EstadoStatus {
     @Override public String getNome() { return "Em andamento"; }
     @Override public EstadoStatus proximo() { return new TicketResolvido(); }

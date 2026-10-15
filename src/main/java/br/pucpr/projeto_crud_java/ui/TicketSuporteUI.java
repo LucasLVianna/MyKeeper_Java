@@ -8,7 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import java.util.List;
 
-/** Tela CRUD de Ticket de Suporte; o fluxo de status vem do padrão State. */
 public class TicketSuporteUI extends CrudComEstadoUI<TicketSuporte> {
 
     private final TextField txtTitulo = campo("Título");

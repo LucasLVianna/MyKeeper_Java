@@ -1,6 +1,5 @@
 package br.pucpr.projeto_crud_java.model.estado;
 
-/** ConcreteState: lista pronta para ir ao mercado. Não pode ser editada, mas pode ser reaberta. */
 public class ListaFinalizada implements EstadoStatus {
     @Override public String getNome() { return "Finalizada"; }
     @Override public EstadoStatus proximo() { return new ListaComprada(); }

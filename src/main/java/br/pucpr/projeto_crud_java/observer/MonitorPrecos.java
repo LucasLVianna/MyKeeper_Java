@@ -3,16 +3,10 @@ package br.pucpr.projeto_crud_java.observer;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/**
- * PADRÃO: Observer (GoF, comportamental) - Subject.
- *
- * Mantém a lista de observadores e os notifica a cada preço registrado.
- * Quem registra o preço (ArquivoHistoricoPreco) não conhece os observadores
- * concretos, o que permite acrescentar novos alertas sem alterar o repositório.
- */
+// Guarda os observadores e avisa todos quando um preço é registrado.
+// O ArquivoHistoricoPreco não sabe quais alertas existem.
 public class MonitorPrecos {
 
-    /** Instância compartilhada pela aplicação (repositório e telas usam o mesmo assunto). */
     public static final MonitorPrecos INSTANCE = new MonitorPrecos();
 
     private final List<ObservadorPreco> observadores = new CopyOnWriteArrayList<>();
@@ -34,7 +28,7 @@ public class MonitorPrecos {
             try {
                 o.precoRegistrado(variacao);
             } catch (RuntimeException e) {
-                // um observador com defeito não pode impedir os demais de serem avisados
+                // se um observador der erro, os outros continuam sendo avisados
                 System.err.println("Falha em observador de preço: " + e.getMessage());
             }
         }

@@ -18,7 +18,7 @@ Os dados ficam em arquivos `.dat` na pasta de execução; os alertas de preço, 
 ```
 ./mvnw test
 ```
-`PadroesTest` cobre os quatro padrões (13 testes).
+`PadroesTest` cobre os quatro padrões (14 testes).
 
 ## Onde está cada padrão
 | Padrão | Pacote / classes principais |
@@ -28,4 +28,25 @@ Os dados ficam em arquivos `.dat` na pasta de execução; os alertas de preço, 
 | Strategy | `ordenacao.*` (`EstrategiaOrdenacao`, `OrdenacaoPorId/Texto/Numero/Data`), contexto `ui.CrudUI` |
 | Observer | `observer.*` (`MonitorPrecos`, `ObservadorPreco`, `AlertaAumentoPreco`, `AlertaMenorPreco`, `RegistroAlertasLog`) |
 
-Diagramas de classes em `docs/diagramas/` (PNG, SVG e PDF; fonte `.dot`).
+## Fluxos de status (State)
+| Entidade | Fluxo | Regras |
+|---|---|---|
+| Ticket de Suporte | Aberto → Em andamento → Resolvido → Fechado | Reabertura de Resolvido/Em andamento; só exclui quando Aberto; Resolvido e Fechado não podem ser editados |
+| Lista de Compras | Em elaboração → Finalizada → Comprada | Finalizada pode ser reaberta; Comprada é somente leitura |
+| Estoque | Ativo → Inativo → Arquivado | Inativo pode ser reativado; só exclui quando Inativo; Arquivado é somente leitura |
+
+As regras valem tanto na tela quanto no repositório (`RepositorioComEstado`).
+
+## Documentação
+- `docs/Relatorio_RA2_MyKeeper.pdf`: relatório técnico da entrega.
+- `docs/diagramas/` (PNG):
+
+| Arquivo | Conteúdo |
+|---|---|
+| `diagrama_pacotes.png` | Dependências entre pacotes |
+| `diagrama_geral.png` | Diagrama de classes geral, agrupado por pacote |
+| `model.png` | Entidades e repositórios (Template Method) |
+| `model_estados.png` | Estados (State) |
+| `ordenacao.png` | Estratégias de ordenação (Strategy) |
+| `observer.png` | Alertas de preço (Observer) |
+| `ui.png` | Telas CRUD (Template Method / contexto do Strategy) |

@@ -3,7 +3,7 @@ package br.pucpr.projeto_crud_java.observer;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-/** ConcreteObserver: avisa quando o preço sobe acima de um limite percentual. */
+// Avisa quando o preço sobe mais que o limite (%)
 public class AlertaAumentoPreco implements ObservadorPreco {
 
     private final double limitePercentual;

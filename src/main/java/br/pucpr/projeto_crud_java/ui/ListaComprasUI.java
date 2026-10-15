@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import java.time.LocalDate;
 import java.util.List;
 
-/** Tela CRUD de Lista de Compras; o fluxo de status vem do padrão State. */
 public class ListaComprasUI extends CrudComEstadoUI<ListaCompras> {
 
     private final TextField txtNome = campo("Nome");

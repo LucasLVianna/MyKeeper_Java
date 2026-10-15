@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import java.util.List;
 
-/** Tela CRUD de Produto (Template Method: só define o que varia em relação a CrudUI). */
 public class ProdutoUI extends CrudUI<Produto> {
 
     private final TextField txtNome = campo("Nome");

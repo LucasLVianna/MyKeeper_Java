@@ -3,7 +3,6 @@ package br.pucpr.projeto_crud_java.ordenacao;
 import br.pucpr.projeto_crud_java.model.Identificavel;
 import java.util.Comparator;
 
-/** ConcreteStrategy: ordena pelo identificador (ordem de cadastro). */
 public class OrdenacaoPorId<T extends Identificavel> extends OrdenacaoPorComparador<T> {
 
     private final boolean crescente;

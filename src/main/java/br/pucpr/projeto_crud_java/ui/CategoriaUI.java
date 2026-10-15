@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import java.util.List;
 
-/** Tela CRUD de Categoria. */
 public class CategoriaUI extends CrudUI<Categoria> {
 
     private final TextField txtNome = campo("Nome");

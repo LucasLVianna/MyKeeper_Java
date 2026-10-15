@@ -16,7 +16,7 @@ public class Main extends Application {
     public void start(Stage stage) {
         stage.setTitle("MyKeeper");
 
-        // Observer: o log de preços observa o histórico durante toda a execução do app
+        // o log de preços fica registrado enquanto o app estiver aberto
         MonitorPrecos.INSTANCE.registrar(new RegistroAlertasLog());
 
         Button btnProduto          = new Button("Produtos");

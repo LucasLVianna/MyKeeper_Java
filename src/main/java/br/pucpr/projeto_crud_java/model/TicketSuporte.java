@@ -12,7 +12,7 @@ public class TicketSuporte implements ComEstado {
     private String titulo;
     private String prioridade;
     private String status;
-    /** Estado atual (padrão State). Não é serializado: é reconstruído a partir de {@code status}. */
+    // não é salvo no arquivo, é recriado a partir do status
     private transient EstadoStatus estado;
 
     public TicketSuporte(int id, String titulo, String prioridade, String status) {
@@ -65,7 +65,7 @@ public class TicketSuporte implements ComEstado {
 
     @Override
     public void avancarStatus() {
-        estado = getEstado().proximo();   // delegação ao objeto de estado
+        estado = getEstado().proximo();
         status = estado.getNome();
     }
 

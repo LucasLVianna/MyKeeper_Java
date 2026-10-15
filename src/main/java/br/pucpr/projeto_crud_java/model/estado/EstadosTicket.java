@@ -1,6 +1,6 @@
 package br.pucpr.projeto_crud_java.model.estado;
 
-/** Reconstrói o objeto de estado a partir do nome gravado no arquivo. */
+// Converte o status salvo no arquivo no objeto de estado
 public final class EstadosTicket {
     private EstadosTicket() { }
 
@@ -15,6 +15,6 @@ public final class EstadosTicket {
                 default: break;
             }
         }
-        return inicial();   // dados antigos (texto livre) voltam ao estado inicial
+        return inicial();   // status antigos/desconhecidos viram Aberto
     }
 }

@@ -1,6 +1,7 @@
 package br.pucpr.projeto_crud_java.model;
 
 public class Receita implements Identificavel {
+    private static final long serialVersionUID = 1L;
 
     private int id;
     private String nome;

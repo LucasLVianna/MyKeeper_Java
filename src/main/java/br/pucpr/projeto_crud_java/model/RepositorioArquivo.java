@@ -8,25 +8,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-/**
- * PADRÃO: Template Method (GoF, comportamental) - AbstractClass.
- *
- * Define o esqueleto das operações de persistência em arquivo (adicionar,
- * atualizar, deletar). A sequência de passos de cada operação é fixa
- * (métodos finais), enquanto os passos variáveis ficam em métodos gancho
- * ("hooks") que as subclasses concretas sobrescrevem:
- *
- *   - caminhoArquivo()           : passo abstrato (obrigatório)
- *   - validar / validarAtualizacao / validarRemocao : ganchos de regra de negócio
- *   - aposAdicionar              : gancho de pós-processamento (ex.: notificar observadores)
- *
- * @param <T> tipo da entidade persistida
- */
+// Template Method: adicionar, atualizar e deletar são final e seguem sempre a mesma ordem.
+// As subclasses só informam o nome do arquivo e, se precisarem, sobrescrevem os métodos
+// de validação ou o aposAdicionar.
 public abstract class RepositorioArquivo<T extends Identificavel> {
 
     private static File diretorioBase = new File(".");
 
-    /** Define a pasta onde os arquivos .dat são gravados (usado pelos testes; padrão: pasta atual). */
+    // usado nos testes para gravar os .dat numa pasta temporária
     public static void setDiretorioBase(File diretorio) {
         diretorioBase = diretorio;
     }
@@ -35,38 +24,31 @@ public abstract class RepositorioArquivo<T extends Identificavel> {
         return new File(diretorioBase, caminhoArquivo());
     }
 
-    // ---------- passos variáveis (hooks) ----------
-
-    /** Passo obrigatório: nome do arquivo .dat da entidade. */
     protected abstract String caminhoArquivo();
 
-    /** Gancho: valida uma entidade antes de ser adicionada. Padrão: não faz nada. */
+    // métodos que as subclasses podem sobrescrever (por padrão não fazem nada)
     protected void validar(T novo) { }
 
-    /** Gancho: valida a troca de {@code atual} por {@code novo}. Padrão: não faz nada. */
     protected void validarAtualizacao(T atual, T novo) { }
 
-    /** Gancho: valida a remoção da entidade. Padrão: não faz nada. */
     protected void validarRemocao(T atual) { }
 
-    /** Gancho: executado depois que a entidade foi gravada. Padrão: não faz nada. */
     protected void aposAdicionar(T adicionado) { }
 
-    // ---------- esqueleto do algoritmo (template methods) ----------
-
     public final void adicionar(T novo) {
-        validar(novo);                       // 1. gancho
-        ArrayList<T> lista = lerLista();     // 2. passo fixo
-        lista.add(novo);                     // 3. passo fixo
-        salvarLista(lista);                  // 4. passo fixo
-        aposAdicionar(novo);                 // 5. gancho
+        validar(novo);
+        ArrayList<T> lista = lerLista();
+        lista.add(novo);
+        salvarLista(lista);
+        aposAdicionar(novo);
     }
 
     public final void atualizar(T atualizado) {
+        validar(atualizado);
         ArrayList<T> lista = lerLista();
         for (int i = 0; i < lista.size(); i++) {
             if (lista.get(i).getId() == atualizado.getId()) {
-                validarAtualizacao(lista.get(i), atualizado);   // gancho
+                validarAtualizacao(lista.get(i), atualizado);
                 lista.set(i, atualizado);
                 break;
             }
@@ -78,15 +60,13 @@ public abstract class RepositorioArquivo<T extends Identificavel> {
         ArrayList<T> lista = lerLista();
         for (int i = 0; i < lista.size(); i++) {
             if (lista.get(i).getId() == id) {
-                validarRemocao(lista.get(i));                   // gancho
+                validarRemocao(lista.get(i));
                 lista.remove(i);
                 break;
             }
         }
         salvarLista(lista);
     }
-
-    // ---------- passos fixos de infraestrutura ----------
 
     public final void salvarLista(ArrayList<T> lista) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(arquivo()))) {

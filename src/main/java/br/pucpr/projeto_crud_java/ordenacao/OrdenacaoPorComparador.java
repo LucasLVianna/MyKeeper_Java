@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * Base comum das estratégias concretas: o algoritmo de ordenar é o mesmo,
- * a variação está somente no comparador que cada subclasse fornece.
- */
+// As estratégias só mudam o Comparator, o resto é igual
 public abstract class OrdenacaoPorComparador<T> implements EstrategiaOrdenacao<T> {
 
     private final String nome;
@@ -16,7 +13,6 @@ public abstract class OrdenacaoPorComparador<T> implements EstrategiaOrdenacao<T
         this.nome = nome;
     }
 
-    /** Critério de comparação da estratégia concreta. */
     protected abstract Comparator<T> comparador();
 
     @Override

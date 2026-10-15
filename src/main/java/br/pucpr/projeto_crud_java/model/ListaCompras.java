@@ -4,7 +4,6 @@ import br.pucpr.projeto_crud_java.model.estado.ComEstado;
 import br.pucpr.projeto_crud_java.model.estado.EstadoStatus;
 import br.pucpr.projeto_crud_java.model.estado.EstadosLista;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class ListaCompras implements ComEstado {
     private static final long serialVersionUID = 1L;
@@ -13,7 +12,7 @@ public class ListaCompras implements ComEstado {
     private String nome;
     private LocalDate data_criacao;
     private String status;
-    /** Estado atual (padrão State). Não é serializado: é reconstruído a partir de {@code status}. */
+    // não é salvo no arquivo, é recriado a partir do status
     private transient EstadoStatus estado;
 
     public ListaCompras(int id, String nome, LocalDate data_criacao, String status) {
@@ -66,7 +65,7 @@ public class ListaCompras implements ComEstado {
 
     @Override
     public void avancarStatus() {
-        estado = getEstado().proximo();   // delegação ao objeto de estado
+        estado = getEstado().proximo();
         status = estado.getNome();
     }
 
@@ -78,7 +77,7 @@ public class ListaCompras implements ComEstado {
 
     @Override
     public String toString() {
-        return "Estoque [ID: " + id + "] " + nome +
+        return "ListaCompras [ID: " + id + "] " + nome +
                 " | Data de Criação: " + data_criacao +
                 " | Status: " + status;
     }

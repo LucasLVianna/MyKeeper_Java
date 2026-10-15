@@ -3,7 +3,7 @@ package br.pucpr.projeto_crud_java.observer;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-/** ConcreteObserver: avisa quando o novo preço é o menor já registrado para o produto. */
+// Avisa quando o preço é o menor já registrado para o produto
 public class AlertaMenorPreco implements ObservadorPreco {
 
     private final Consumer<String> saida;

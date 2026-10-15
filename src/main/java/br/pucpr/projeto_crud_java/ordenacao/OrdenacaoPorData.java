@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.function.Function;
 
-/** ConcreteStrategy: ordena por um campo de data (datas nulas ficam por último). */
+// datas vazias ficam no fim
 public class OrdenacaoPorData<T> extends OrdenacaoPorComparador<T> {
 
     private final Function<T, LocalDate> campo;

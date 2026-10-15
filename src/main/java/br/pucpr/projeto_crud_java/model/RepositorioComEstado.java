@@ -2,12 +2,7 @@ package br.pucpr.projeto_crud_java.model;
 
 import br.pucpr.projeto_crud_java.model.estado.ComEstado;
 
-/**
- * Especialização do Template Method para entidades que usam o padrão State.
- * Sobrescreve os ganchos de validação para que as regras de cada estado
- * (editar, excluir, transições legais) sejam garantidas na camada de dados,
- * e não apenas na interface.
- */
+// Repositório das entidades com status: bloqueia edição, exclusão e transições que o estado atual não permite
 public abstract class RepositorioComEstado<T extends ComEstado> extends RepositorioArquivo<T> {
 
     @Override
@@ -15,13 +10,13 @@ public abstract class RepositorioComEstado<T extends ComEstado> extends Reposito
         String nomeAtual = atual.getEstado().getNome();
         String nomeNovo = novo.getStatus();
         if (nomeAtual.equalsIgnoreCase(nomeNovo)) {
-            // mesmo estado: é uma edição de dados
+            // status igual: é só edição dos dados
             if (!atual.getEstado().permiteEdicao()) {
                 throw new IllegalStateException("Registro no estado \"" + nomeAtual + "\" não pode ser editado.");
             }
             return;
         }
-        // estado diferente: só são aceitas as transições previstas pelo próprio estado
+        // status mudou: só aceita ir para o próximo ou voltar para o anterior
         boolean avancou = atual.getEstado().permiteAvancar()
                 && atual.getEstado().proximo().getNome().equalsIgnoreCase(nomeNovo);
         boolean voltou = atual.getEstado().permiteVoltar()

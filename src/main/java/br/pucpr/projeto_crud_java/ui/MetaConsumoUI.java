@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import java.util.List;
 
-/** Tela CRUD de Meta de Consumo. */
 public class MetaConsumoUI extends CrudUI<MetaConsumo> {
 
     private final TextField txtCategoria = campo("Categoria");
@@ -36,7 +35,7 @@ public class MetaConsumoUI extends CrudUI<MetaConsumo> {
         try {
             limite = Double.parseDouble(texto(txtLimiteMensal).replace(",", "."));
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Digite um limite mensal numerico valido.");
+            throw new IllegalArgumentException("Digite um limite mensal numérico válido.");
         }
         return new MetaConsumo(id, texto(txtCategoria), limite, texto(txtUnidadeMedida));
     }

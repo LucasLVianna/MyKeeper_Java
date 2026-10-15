@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import java.util.List;
 
-/** Tela CRUD de Fornecedor (com validação de contato, CEP e PIX/CPF). */
 public class FornecedorUI extends CrudUI<Fornecedor> {
 
     private final TextField txtNome = campo("Nome");

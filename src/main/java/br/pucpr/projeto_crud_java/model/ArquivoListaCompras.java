@@ -1,6 +1,6 @@
 package br.pucpr.projeto_crud_java.model;
 
-/** Repositório de ListaCompras (Template Method + regras do State herdadas de RepositorioComEstado). */
+// as regras de status ficam em RepositorioComEstado
 public class ArquivoListaCompras extends RepositorioComEstado<ListaCompras> {
 
     public static final ArquivoListaCompras INSTANCE = new ArquivoListaCompras();
